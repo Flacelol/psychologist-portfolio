@@ -88,7 +88,7 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
     submitBtn.disabled = true;
     
     // Send email using EmailJS
-    emailjs.send('service_wrz1o2p', 'template_9euk13t', {
+    emailjs.send('service_2pk9cen', 'template_miusrb9', {
         from_name: name,
         from_email: email,
         phone: phone,
