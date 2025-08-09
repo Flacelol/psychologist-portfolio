@@ -17,15 +17,9 @@ const header = document.getElementById('header');
 const appointmentBtn = document.getElementById('appointmentBtn');
 
 window.addEventListener('scroll', function() {
-    // Отключаем scroll эффект на мобильных устройствах
-    if (window.innerWidth > 768) {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+    if (window.scrollY > 100) {
+        header.classList.add('scrolled');
     } else {
-        // На мобильных устройствах убираем класс scrolled
         header.classList.remove('scrolled');
     }
 });
@@ -57,49 +51,25 @@ nav.querySelectorAll('a').forEach(link => {
 });
 
 // Contact form handling
-// Contact form handling
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Get form data
-    const name = this.querySelector('input[name="from_name"]').value;
-    const email = this.querySelector('input[name="from_email"]').value;
-    const message = this.querySelector('textarea[name="message"]').value;
+    const name = this.querySelector('input[type="text"]').value;
+    const contact = this.querySelectorAll('input[type="text"]')[1].value;
+    const message = this.querySelector('textarea').value;
     
     // Simple validation
-    if (!name || !email || !message) {
+    if (!name || !contact || !message) {
         alert('Будь ласка, заповніть всі поля');
         return;
     }
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Будь ласка, введіть коректний email');
-        return;
-    }
+    // Show success message
+    alert('Дякую за ваше повідомлення! Я зв\'яжуся з вами найближчим часом.');
     
-    // Disable submit button during sending
-    const submitBtn = this.querySelector('.btn-submit');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Надсилаю...';
-    submitBtn.disabled = true;
-    
-    // Send email using EmailJS
-    emailjs.sendForm('service_wrz1o2p', 'template_9euk13t', this)
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            alert('Дякую за ваше повідомлення! Я зв\'яжуся з вами найближчим часом.');
-            document.querySelector('.contact-form').reset();
-        }, function(error) {
-            console.log('FAILED...', error);
-            alert('Виникла помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться зі мною через месенджери.');
-        })
-        .finally(function() {
-            // Re-enable submit button
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        });
+    // Reset form
+    this.reset();
 });
 
 // Appointment button functionality
@@ -126,19 +96,19 @@ document.querySelectorAll('.btn-media').forEach(button => {
     button.addEventListener('click', function() {
         const mediaType = this.parentElement.querySelector('h3').textContent;
         if (mediaType === 'Подкаст') {
-            window.open('https://youtu.be/7h_zo5d0OZ4?si=Q6bjlmTnfgsGmPO7', '_blank');
+            alert('Посилання на подкаст буде додано найближчим часом.');
         } else if (mediaType === 'Стаття') {
-            window.open('https://novadoba.com.ua/428685-proyekt-ty-peremozhets-psyhologynya-anastasiya-zabolotna.html', '_blank');
+            alert('Посилання на статтю буде додано найближчим часом.');
         }
     });
 });
 
 // Messenger links functionality
 document.querySelectorAll('.messenger-link').forEach(link => {
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
         const messenger = this.querySelector('span').textContent;
-        console.log(`Переход на ${messenger}`);
-        // Здесь можно добавить код для аналитики
+        alert(`Контакт ${messenger} буде додано найближчим часом.`);
     });
 });
 
@@ -218,15 +188,9 @@ if ('scrollBehavior' in document.documentElement.style) {
 let ticking = false;
 
 function updateScrollEffects() {
-    // Отключаем scroll эффект на мобильных устройствах
-    if (window.innerWidth > 768) {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+    if (window.scrollY > 100) {
+        header.classList.add('scrolled');
     } else {
-        // На мобильных устройствах убираем класс scrolled
         header.classList.remove('scrolled');
     }
     ticking = false;
