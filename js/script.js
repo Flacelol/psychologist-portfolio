@@ -142,13 +142,6 @@ document.querySelectorAll('.btn-appointment, .btn-primary').forEach(button => {
     });
 });
 
-// Service details functionality
-document.querySelectorAll('.btn-service').forEach(button => {
-    button.addEventListener('click', function() {
-        const serviceName = this.parentElement.querySelector('h3').textContent;
-        alert(`Для отримання детальної інформації про "${serviceName}" зв'яжіться зі мною через форму нижче або месенджери.`);
-    });
-});
 
 // Media buttons functionality
 
