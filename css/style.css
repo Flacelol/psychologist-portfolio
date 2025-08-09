@@ -367,15 +367,21 @@ html {
     margin-bottom: 1.5rem;
     font-size: 16px;
     text-align: left;
+    padding: 0 40px; /* Добавляем отступы слева и справа */
+    max-width: 280px; /* Ограничиваем ширину текста */
+    margin-left: auto; /* Центрируем блок текста */
+    margin-right: auto; /* Центрируем блок текста */
 }
 
 .education-image {
     width: 100%;
-    max-width: 700px;
-    height: 400px;
-    object-fit: contain;
+    max-width: 800px; /* Увеличено с 400px до 600px */
+    height: 450px; /* Увеличено с 250px до 350px */
+    object-fit: cover;
+    object-position: left center;
+    transform: scale(1);
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 80px auto 0;
     display: block;
     background: #f8f9fa;
 }
@@ -437,6 +443,9 @@ html {
     font-size: 16px;
     font-weight: 600;
     margin-top: auto;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn-media:hover {
@@ -1057,5 +1066,326 @@ html {
     
     .certificate-image {
         height: 180px;
+    }
+}
+
+
+.service-page main {
+    padding-top: 0;
+}
+
+.service-page .about {
+    background: var(--white);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 120px;
+    box-sizing: border-box;
+}
+
+.service-page .about-content {
+    text-align: center;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.service-page .about-text {
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.service-page .about-text h1,
+.service-page .about-text h2,
+.service-page .about-text h3 {
+    color: var(--teal);
+}
+
+.service-page .about-text p,
+.service-page .about-text li {
+    color: var(--text-dark);
+}
+
+.service-page .about-text ul {
+    color: var(--text-dark);
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* Современный дизайн для страниц услуг */
+.service-page .about {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 20px 60px;
+    box-sizing: border-box;
+}
+
+.service-page .about-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.service-page .about-text {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 50px 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.service-page .about-text h1 {
+    color: var(--teal);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.service-page .about-text h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--accent));
+    border-radius: 2px;
+}
+
+.service-page .about-text h3 {
+    color: var(--teal);
+    font-size: 1.4rem;
+    margin: 30px 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.service-page .about-text h3::before {
+    content: '▶';
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+.service-page .about-text p {
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.service-page .about-text ul {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin: 20px 0;
+    border-left: 4px solid var(--teal);
+}
+
+.service-page .about-text li {
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    padding-left: 10px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.service-page .about-text li::before {
+    content: '✓';
+    position: absolute;
+    left: -15px;
+    color: var(--teal);
+    font-weight: bold;
+}
+
+/* Стилизация кнопки записи - бирюзовый цвет */
+.service-page .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-page .btn-primary:hover {
+    background: #2c7a7b;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .service-page .about {
+        padding: 120px 15px 40px;
+    }
+    
+    .service-page .about-text {
+        padding: 30px 25px;
+        border-radius: 15px;
+    }
+    
+    .service-page .about-text h1 {
+        font-size: 2rem;
+    }
+    
+    .service-page .about-text h3 {
+        font-size: 1.2rem;
+    }
+    
+    .service-page .about-text ul {
+        padding: 20px 25px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .service-page .about {
+        padding: 140px 60px 60px;
+        justify-content: center;
+    }
+    
+    .service-page .about-content {
+        max-width: 700px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .service-page .about-text {
+        padding: 60px 50px;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .service-page .about-text h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .service-page .about {
+        padding: 140px 80px 60px;
+    }
+    
+    .service-page .about-content {
+        max-width: 750px;
+    }
+}
+
+/* Стили для страниц услуг с боковой панелью */
+@media (min-width: 1024px) {
+    .service-page .about {
+        padding: 140px 20px 60px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 40px;
+    }
+    
+    .service-page .about-content {
+        max-width: 600px;
+        flex: 1;
+        margin: 0;
+    }
+    
+    .service-page .about-text {
+        padding: 40px 30px;
+        margin: 0;
+        width: 100%;
+        text-align: left;
+    }
+    
+    /* Боковая панель с карточками услуг */
+    .service-page .services-sidebar {
+        width: 280px;
+        flex-shrink: 0;
+    }
+    
+    .service-page .services-sidebar h3 {
+        color: var(--teal);
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    
+    .service-page .sidebar-service-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+    
+    .service-page .sidebar-service-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .service-page .sidebar-service-card i {
+        font-size: 24px;
+        color: var(--teal);
+        margin-bottom: 10px;
+    }
+    
+    .service-page .sidebar-service-card h4 {
+        color: var(--teal);
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+    
+    .service-page .sidebar-service-card p {
+        color: var(--text-dark);
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+    
+    .service-page .sidebar-service-card .btn-service {
+        background: var(--mint);
+        color: var(--teal);
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .service-page .sidebar-service-card .btn-service:hover {
+        background: var(--teal);
+        color: var(--white);
+    }
+}
+
+@media (min-width: 1200px) {
+    .service-page .about {
+        padding: 140px 60px 60px;
+        gap: 60px;
+    }
+    
+    .service-page .services-sidebar {
+        width: 320px;
+    }
+    
+    .service-page .about-content {
+        max-width: 700px;
     }
 }

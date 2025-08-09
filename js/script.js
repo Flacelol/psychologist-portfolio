@@ -92,16 +92,7 @@ document.querySelectorAll('.btn-service').forEach(button => {
 });
 
 // Media buttons functionality
-document.querySelectorAll('.btn-media').forEach(button => {
-    button.addEventListener('click', function() {
-        const mediaType = this.parentElement.querySelector('h3').textContent;
-        if (mediaType === 'Подкаст') {
-            alert('Посилання на подкаст буде додано найближчим часом.');
-        } else if (mediaType === 'Стаття') {
-            alert('Посилання на статтю буде додано найближчим часом.');
-        }
-    });
-});
+
 
 // Messenger links functionality
 document.querySelectorAll('.messenger-link').forEach(link => {
