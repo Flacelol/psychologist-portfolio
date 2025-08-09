@@ -102,9 +102,9 @@ document.querySelectorAll('.btn-media').forEach(button => {
     button.addEventListener('click', function() {
         const mediaType = this.parentElement.querySelector('h3').textContent;
         if (mediaType === 'Подкаст') {
-            alert('Посилання на подкаст буде додано найближчим часом.');
+            window.open('https://youtu.be/7h_zo5d0OZ4?si=Q6bjlmTnfgsGmPO7', '_blank');
         } else if (mediaType === 'Стаття') {
-            alert('Посилання на статтю буде додано найближчим часом.');
+            window.open('https://novadoba.com.ua/428685-proyekt-ty-peremozhets-psyhologynya-anastasiya-zabolotna.html', '_blank');
         }
     });
 });
