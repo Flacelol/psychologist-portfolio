@@ -135,10 +135,10 @@ document.querySelectorAll('.btn-media').forEach(button => {
 
 // Messenger links functionality
 document.querySelectorAll('.messenger-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
+    link.addEventListener('click', function() {
         const messenger = this.querySelector('span').textContent;
-        alert(`Контакт ${messenger} буде додано найближчим часом.`);
+        console.log(`Переход на ${messenger}`);
+        // Здесь можно добавить код для аналитики
     });
 });
 
