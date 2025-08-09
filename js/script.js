@@ -51,7 +51,7 @@ nav.querySelectorAll('a').forEach(link => {
 });
 
 // Contact form handling
-// Contact form handling
+// Contact form handling with EmailJS
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -79,16 +79,31 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
     submitBtn.textContent = 'Надсилання...';
     submitBtn.disabled = true;
     
-    // Simulate form submission (replace with actual EmailJS or backend call)
-    setTimeout(() => {
+    // Send email using EmailJS
+    emailjs.send('service_wrz1o2p', 'template_9euk13t', {
+        from_name: name,
+        from_email: email,
+        message: message,
+        to_name: 'Анастасія Заболотна'
+    })
+    .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
         // Show success message
         showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
         
-        // Reset form and button
-        this.reset();
+        // Reset form
+        document.querySelector('.contact-form').reset();
+    })
+    .catch(function(error) {
+        console.log('FAILED...', error);
+        // Show error message
+        showMessage('Помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться через месенджери.', 'error');
+    })
+    .finally(function() {
+        // Reset button state
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-    }, 1500);
+    });
 });
 
 // Function to show custom messages
