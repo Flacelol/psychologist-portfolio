@@ -58,10 +58,11 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
     // Get form data using correct selectors
     const name = this.querySelector('input[name="from_name"]').value;
     const email = this.querySelector('input[name="from_email"]').value;
+    const phone = this.querySelector('input[name="phone"]').value;
     const message = this.querySelector('textarea[name="message"]').value;
     
     // Simple validation
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
         showMessage('Будь ласка, заповніть всі поля', 'error');
         return;
     }
@@ -70,6 +71,13 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         showMessage('Будь ласка, введіть коректний email', 'error');
+        return;
+    }
+    
+    // Phone validation (basic)
+    const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+    if (!phoneRegex.test(phone)) {
+        showMessage('Будь ласка, введіть коректний номер телефону', 'error');
         return;
     }
     
@@ -83,6 +91,7 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
     emailjs.send('service_wrz1o2p', 'template_9euk13t', {
         from_name: name,
         from_email: email,
+        phone: phone,
         message: message,
         to_name: 'Анастасія Заболотна'
     })
@@ -146,14 +155,7 @@ document.querySelectorAll('.btn-appointment, .btn-primary').forEach(button => {
 // Media buttons functionality
 
 
-// Messenger links functionality
-document.querySelectorAll('.messenger-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const messenger = this.querySelector('span').textContent;
-        alert(`Контакт ${messenger} буде додано найближчим часом.`);
-    });
-});
+
 
 // Scroll animations
 const observerOptions = {
