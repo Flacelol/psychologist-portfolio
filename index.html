@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("mQ7rD4M2WEAjG89N_");
+        })();
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -99,7 +105,7 @@
                     </div>
                     <h3>Формальна освіта 🎓</h3>
                     <p>Магістр психології, ЧНУ ім. Б. Хмельницького (2023), спеціалізація — медичний психолог.</p>
-                    <img src="images/diploma.jpg" alt="Диплом" class="education-image">
+                    <img src="images/diplomchnu.jpg" alt="Диплом" class="education-image">
                 </div>
                 
                 <div class="education-card scroll-animate">
@@ -163,7 +169,7 @@
                     <i class="fas fa-user"></i>
                     <h3>Індивідуальні консультації</h3>
                     <p>Підтримка дітей, підлітків, дорослих</p>
-                    <button class="btn-service">Детальніше</button>
+                    <img src="images/seans.jpg" alt="Індивідуальні консультації" class="service-image">
                 </div>
                 
                 <div class="service-card scroll-animate">
@@ -245,21 +251,18 @@
                 
                 <form class="contact-form scroll-animate">
                     <div class="form-group">
-                        <input type="text" placeholder="Ім'я" required>
+                        <input type="text" name="from_name" placeholder="Ім'я" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Email/Телефон" required>
+                        <input type="email" name="from_email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Повідомлення" rows="5" required></textarea>
+                        <textarea name="message" placeholder="Повідомлення" rows="5" required></textarea>
                     </div>
                     <button type="submit" class="btn-submit">Надіслати</button>
                 </form>
                     <div class="contact-messengers scroll-animate">
                         <a href="#" class="messenger-link">
-                            <i class="fab fa-telegram"></i>
-                            <span>Telegram</span>
-                        </a>
                         <a href="https://www.instagram.com/anastasia_.zabolotna?igsh=MXc1NTM5MWJlZHo0NQ==" target="_blank" class="messenger-link">
                             <i class="fab fa-instagram"></i>
                             <span>Instagram</span>
@@ -307,9 +310,6 @@
                         <p><i class="fas fa-phone"></i> 067 478 05 40</p>
                     </div>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-viber"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://www.instagram.com/anastasia_.zabolotna?igsh=MXc1NTM5MWJlZHo0NQ==" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.facebook.com/100095035722399/" target="_blank"><i class="fab fa-facebook"></i></a>
                         <a href="viber://chat?number=+380637897967"><i class="fab fa-viber"></i></a>

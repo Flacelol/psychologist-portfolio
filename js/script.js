@@ -57,25 +57,49 @@ nav.querySelectorAll('a').forEach(link => {
 });
 
 // Contact form handling
+// Contact form handling
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Get form data
-    const name = this.querySelector('input[type="text"]').value;
-    const contact = this.querySelectorAll('input[type="text"]')[1].value;
-    const message = this.querySelector('textarea').value;
+    const name = this.querySelector('input[name="from_name"]').value;
+    const email = this.querySelector('input[name="from_email"]').value;
+    const message = this.querySelector('textarea[name="message"]').value;
     
     // Simple validation
-    if (!name || !contact || !message) {
+    if (!name || !email || !message) {
         alert('Будь ласка, заповніть всі поля');
         return;
     }
     
-    // Show success message
-    alert('Дякую за ваше повідомлення! Я зв\'яжуся з вами найближчим часом.');
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Будь ласка, введіть коректний email');
+        return;
+    }
     
-    // Reset form
-    this.reset();
+    // Disable submit button during sending
+    const submitBtn = this.querySelector('.btn-submit');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Надсилаю...';
+    submitBtn.disabled = true;
+    
+    // Send email using EmailJS
+    emailjs.sendForm('service_wrz1o2p', 'template_9euk13t', this)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            alert('Дякую за ваше повідомлення! Я зв\'яжуся з вами найближчим часом.');
+            document.querySelector('.contact-form').reset();
+        }, function(error) {
+            console.log('FAILED...', error);
+            alert('Виникла помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться зі мною через месенджери.');
+        })
+        .finally(function() {
+            // Re-enable submit button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
 });
 
 // Appointment button functionality

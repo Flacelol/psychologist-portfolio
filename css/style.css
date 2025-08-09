@@ -402,6 +402,10 @@ html {
     text-align: center;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
 }
 
 .media-card:hover {
@@ -417,6 +421,7 @@ html {
     color: var(--text-dark);
     margin-bottom: 1.5rem;
     font-size: 16px;
+    flex-grow: 1;
 }
 
 .btn-media {
@@ -429,6 +434,7 @@ html {
     transition: all 0.3s ease;
     font-size: 16px;
     font-weight: 600;
+    margin-top: auto;
 }
 
 .btn-media:hover {
