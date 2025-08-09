@@ -51,26 +51,70 @@ nav.querySelectorAll('a').forEach(link => {
 });
 
 // Contact form handling
+// Contact form handling
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Get form data
-    const name = this.querySelector('input[type="text"]').value;
-    const contact = this.querySelectorAll('input[type="text"]')[1].value;
-    const message = this.querySelector('textarea').value;
+    // Get form data using correct selectors
+    const name = this.querySelector('input[name="from_name"]').value;
+    const email = this.querySelector('input[name="from_email"]').value;
+    const message = this.querySelector('textarea[name="message"]').value;
     
     // Simple validation
-    if (!name || !contact || !message) {
-        alert('Будь ласка, заповніть всі поля');
+    if (!name || !email || !message) {
+        showMessage('Будь ласка, заповніть всі поля', 'error');
         return;
     }
     
-    // Show success message
-    alert('Дякую за ваше повідомлення! Я зв\'яжуся з вами найближчим часом.');
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showMessage('Будь ласка, введіть коректний email', 'error');
+        return;
+    }
     
-    // Reset form
-    this.reset();
+    // Show loading state
+    const submitBtn = this.querySelector('.btn-submit');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Надсилання...';
+    submitBtn.disabled = true;
+    
+    // Simulate form submission (replace with actual EmailJS or backend call)
+    setTimeout(() => {
+        // Show success message
+        showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
+        
+        // Reset form and button
+        this.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }, 1500);
 });
+
+// Function to show custom messages
+function showMessage(text, type) {
+    // Remove existing message if any
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message ${type}`;
+    messageDiv.textContent = text;
+    
+    // Insert message after the form
+    const form = document.querySelector('.contact-form');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
+    
+    // Auto-remove message after 5 seconds
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.remove();
+        }
+    }, 5000);
+}
 
 // Appointment button functionality
 document.querySelectorAll('.btn-appointment, .btn-primary').forEach(button => {
