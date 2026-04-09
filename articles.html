@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статті та новини - Анастасія Заболотна</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("W77pOMiUb5n0T9ZNz");
+        })();
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id=GTM-N55RDPHF'+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N55RDPHF');</script>
+    <!-- End Google Tag Manager -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18070432399"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-18070432399');
+    </script>
+</head>
+<body class="service-page">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N55RDPHF"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
+                        <h2>Анастасія Заболотна</h2>
+                        <p>медичний психолог</p>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="nav" id="nav">
+                    <ul>
+                        <li><a href="index.html#about">Про мене</a></li>
+                        <li><a href="index.html#education">Освіта та досвід</a></li>
+                        <li><a href="index.html#media">Медіа</a></li>
+                        <li><a href="index.html#services">Послуги</a></li>
+                        <li><a href="index.html#reviews">Відгуки</a></li>
+                        <li><a href="index.html#contact">Контакти</a></li>
+                    </ul>
+                </nav>
+                <button class="btn-appointment" id="appointmentBtn" onclick="window.location.href='index.html#contact'">Записатися</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="service-details" style="padding-top: 120px;">
+        <div class="container">
+            <div class="service-header scroll-animate animate">
+                <h1 style="color: var(--primary-color); text-align: center; margin-bottom: 1rem;">Статті та новини</h1>
+                <p class="service-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto;">Корисні матеріали, думки, поради та останні новини з моєї практики.</p>
+            </div>
+            
+            <!-- Articles Grid -->
+            <div class="media-grid" id="dynamicArticlesGrid" style="margin-top: 4rem;">
+                <!-- Тут будуть динамічно завантажені статті з адмінки -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 4rem; padding-bottom: 4rem;">
+                <a href="index.html" class="btn-primary">Повернутися на головну</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const grid = document.getElementById('dynamicArticlesGrid');
+            
+            // Supabase конфігурація
+            const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            // Демо-статті, які завжди будуть на сайті
+            const defaultArticles = [
+                {
+                    title: "Як допомогти дитині адаптуватися до нових умов",
+                    date: "2024-05-10",
+                    text: "Практичні поради для батьків: що робити і чого уникати, коли родина стикається з кардинальними змінами. Як зберегти емоційний зв'язок з дитиною у стресових ситуаціях...",
+                    link: "#"
+                },
+                {
+                    title: "Емоційне вигорання батьків: як розпізнати і діяти",
+                    date: "2024-04-25",
+                    text: "Коли 'просто втомилася' перетворюється на вигорання? Ознаки того, що вам потрібна допомога, і прості техніки самодопомоги, які можна використовувати щодня...",
+                    link: "#"
+                },
+                {
+                    title: "Арттерапія вдома: 5 простих вправ для зняття тривоги",
+                    date: "2024-04-12",
+                    text: "Мистецтво зцілює. Розповідаю про прості та доступні кожному вправи з арттерапії, які допоможуть заспокоїтися та переключити увагу після напруженого дня...",
+                    link: "#"
+                },
+                {
+                    title: "Психологічна підтримка підлітків: міфи та реальність",
+                    date: "2024-03-28",
+                    text: "Підлітковий вік — один із найскладніших періодів. Як зрозуміти свою дитину, коли вона віддаляється, і як побудувати довірливі стосунки без зайвого контролю...",
+                    link: "#"
+                }
+            ];
+
+            // Отримуємо статті, додані через адмінку з Supabase
+            let localArticles = [];
+            try {
+                const { data, error } = await supabase
+                    .from('articles')
+                    .select('*')
+                    .order('date', { ascending: false });
+                
+                if (!error && data) {
+                    localArticles = data;
+                }
+            } catch (e) {
+                console.error("Помилка завантаження статей з Supabase", e);
+            }
+
+            // Об'єднуємо нові статті з демо-статтями (нові йдуть першими)
+            const allArticles = [...localArticles, ...defaultArticles];
+
+            grid.innerHTML = allArticles.map(art => {
+                const d = new Date(art.date);
+                const dateStr = isNaN(d) ? art.date : d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                return `
+                <div class="media-card scroll-animate animate" style="display: flex; flex-direction: column;">
+                    <h3 style="color: var(--primary-color);">${art.title}</h3>
+                    <p style="margin: 1rem 0; font-size: 0.9rem; color: #666;"><i class="far fa-calendar-alt"></i> ${dateStr}</p>
+                    <p style="flex-grow: 1;">${art.text}</p>
+                    ${art.link && art.link !== '#' ? `<a href="${art.link}" target="_blank" class="btn-media" style="margin-top: 1.5rem; align-self: flex-start;">Читати повністю</a>` : `<span style="margin-top: 1.5rem; display: inline-block; color: transparent; user-select: none;">-</span>`}
+                </div>
+                `;
+            }).join('');
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Анастасія Заболотна</h4>
+                    <p>медичний психолог</p>
+                    <p>Допомагаю дітям, підліткам та сім'ям знаходити спокій і гармонію.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Меню</h4>
+                    <ul>
+                        <li><a href="index.html#about">Про мене</a></li>
+                        <li><a href="index.html#education">Освіта та досвід</a></li>
+                        <li><a href="index.html#media">Медіа</a></li>
+                        <li><a href="index.html#services">Послуги</a></li>
+                        <li><a href="index.html#reviews">Відгуки</a></li>
+                        <li><a href="index.html#contact">Контакти</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Контакти</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> 063 789 79 67</p>
+                        <p><i class="fas fa-phone"></i> 067 478 05 40</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/anastasia_.zabolotna?igsh=MXc1NTM5MWJlZHo0NQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/100095035722399/" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="viber://chat?number=+380637897967"><i class="fab fa-viber"></i></a>
+                        <a href="https://t.me/+380637897967" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://wa.me/380674780540" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Анастасія Заболотна. Усі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

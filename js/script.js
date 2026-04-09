@@ -102,6 +102,16 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
         
         // Reset form
         document.querySelector('.contact-form').reset();
+
+        // Відправка події конверсії в Google Ads
+        if (typeof gtag === 'function') {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-18070432399/YQRxCOGL5ccEI_V06hD'
+            });
+            console.log('Google Ads conversion event sent.');
+        } else {
+            console.warn('gtag is not defined. Conversion event not sent.');
+        }
     })
     .catch(function(error) {
         console.log('FAILED...', error);
