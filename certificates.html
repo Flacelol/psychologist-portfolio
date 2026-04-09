@@ -3,38 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Статті та новини - Анастасія Заболотна</title>
+    <title>Всі мої сертифікати - Анастасія Заболотна</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("W77pOMiUb5n0T9ZNz");
-        })();
-    </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id=GTM-N55RDPHF'+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-N55RDPHF');</script>
-    <!-- End Google Tag Manager -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18070432399"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-18070432399');
-    </script>
+    
+    <style>
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 3rem;
+            align-items: stretch; /* Щоб всі картки тягнулися на однакову висоту */
+        }
+        .cert-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background: #fff;
+            transition: transform 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 350px; /* Фіксована висота для всіх карток */
+        }
+        .cert-card:hover {
+            transform: translateY(-5px);
+        }
+        .cert-card img {
+            width: 100%;
+            height: 100%; /* Картинка заповнює всю висоту картки */
+            object-fit: cover; /* Обрізає картинку, щоб вона красиво заповнювала простір без розтягування */
+            display: block;
+        }
+        /* Налаштування спливаючого напису */
+        .cert-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(59, 140, 136, 0.9); /* Колір --teal з прозорістю */
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            font-weight: 500;
+        }
+        .cert-card:hover .cert-overlay {
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body class="service-page">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N55RDPHF"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     
     <!-- Header -->
     <header class="header" id="header">
@@ -68,66 +90,20 @@
     <main class="service-details" style="padding-top: 120px;">
         <div class="container">
             <div class="service-header scroll-animate animate">
-                <h1 style="color: var(--primary-color); text-align: center; margin-bottom: 1rem;">Статті та новини</h1>
-                <p class="service-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto;">Корисні матеріали, думки, поради та останні новини з моєї практики.</p>
+                <h1 style="color: var(--primary-color); text-align: center; margin-bottom: 1rem;">Мої сертифікати</h1>
+                <p class="service-subtitle" style="text-align: center; max-width: 800px; margin: 0 auto;">Підтвердження моєї кваліфікації та постійного професійного розвитку.</p>
             </div>
             
-            <!-- Articles Grid -->
-            <div class="media-grid" id="dynamicArticlesGrid" style="margin-top: 4rem;">
-                <!-- Тут будуть динамічно завантажені статті з адмінки -->
+            <!-- Certs Grid -->
+            <div class="certs-grid" id="dynamicCertsGrid">
+                <p style="text-align: center; width: 100%; grid-column: 1 / -1;">Завантаження сертифікатів...</p>
             </div>
             
             <div style="text-align: center; margin-top: 4rem; padding-bottom: 4rem;">
-                <a href="index.html" class="btn-primary">Повернутися на головну</a>
+                <a href="index.html#education" class="btn-primary">Повернутися назад</a>
             </div>
         </div>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", async function() {
-            const grid = document.getElementById('dynamicArticlesGrid');
-            
-            // Supabase конфігурація
-            const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
-            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            
-            // Отримуємо статті, додані через адмінку з Supabase
-            let allArticles = [];
-            try {
-                const { data, error } = await supabase
-                    .from('articles')
-                    .select('*')
-                    .order('date', { ascending: false });
-                
-                if (!error && data) {
-                    allArticles = data;
-                }
-            } catch (e) {
-                console.error("Помилка завантаження статей з Supabase", e);
-            }
-
-            if (allArticles.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; width: 100%;">Поки що немає доданих статей.</p>';
-                return;
-            }
-
-            grid.innerHTML = allArticles.map(art => {
-                const d = new Date(art.date);
-                const dateStr = isNaN(d) ? art.date : d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
-
-                return `
-                <div class="media-card scroll-animate animate" style="display: flex; flex-direction: column;">
-                    <h3 style="color: var(--primary-color);">${art.title}</h3>
-                    <p style="margin: 1rem 0; font-size: 0.9rem; color: #666;"><i class="far fa-calendar-alt"></i> ${dateStr}</p>
-                    <p style="flex-grow: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis;">${art.text}</p>
-                    <a href="article-view.html?id=${art.id}#${art.id}" class="btn-media" style="margin-top: 1.5rem; align-self: flex-start;">Читати повністю</a>
-                </div>
-                `;
-            }).join('');
-        });
-    </script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -174,6 +150,42 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const grid = document.getElementById('dynamicCertsGrid');
+            
+            // Supabase конфігурація
+            const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            try {
+                const { data, error } = await supabase
+                    .from('certificates')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    grid.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1 / -1; color: #666;">Поки що немає завантажених сертифікатів.</p>';
+                    return;
+                }
+
+                grid.innerHTML = data.map(cert => `
+                    <div class="cert-card">
+                        <img src="${cert.image_url}" alt="${cert.title}" loading="lazy">
+                        <div class="cert-overlay">${cert.title}</div>
+                    </div>
+                `).join('');
+
+            } catch (e) {
+                console.error("Помилка завантаження сертифікатів:", e);
+                grid.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1 / -1; color: red;">Сталася помилка при завантаженні сертифікатів.</p>';
+            }
+        });
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стаття - Анастасія Заболотна</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .article-content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        #articleDate {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            display: block;
+        }
+
+        #articleBody {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            white-space: pre-wrap; /* Зберігає абзаци і перенесення рядків */
+        }
+    </style>
+</head>
+<body class="service-page">
+    
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
+                        <h2>Анастасія Заболотна</h2>
+                        <p>медичний психолог</p>
+                    </a>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="nav" id="nav">
+                    <ul>
+                        <li><a href="index.html#about">Про мене</a></li>
+                        <li><a href="articles.html">Мої статті</a></li>
+                        <li><a href="index.html#education">Освіта та досвід</a></li>
+                        <li><a href="index.html#media">Медіа</a></li>
+                        <li><a href="index.html#services">Послуги</a></li>
+                        <li><a href="index.html#reviews">Відгуки</a></li>
+                        <li><a href="index.html#contact">Контакти</a></li>
+                    </ul>
+                </nav>
+                <button class="btn-appointment" id="appointmentBtn" onclick="window.location.href='index.html#contact'">Записатися</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="service-details" style="padding-top: 120px;">
+        <div class="container">
+            <div class="article-content-wrapper scroll-animate animate" id="articleContainer">
+                <p style="text-align: center;">Завантаження статті...</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem; padding-bottom: 4rem;">
+                <a href="articles.html" class="btn-primary">Всі статті</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Анастасія Заболотна</h4>
+                    <p>медичний психолог</p>
+                    <p>Допомагаю дітям, підліткам та сім'ям знаходити спокій і гармонію.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Меню</h4>
+                    <ul>
+                        <li><a href="index.html#about">Про мене</a></li>
+                        <li><a href="articles.html">Мої статті</a></li>
+                        <li><a href="index.html#education">Освіта та досвід</a></li>
+                        <li><a href="index.html#media">Медіа</a></li>
+                        <li><a href="index.html#services">Послуги</a></li>
+                        <li><a href="index.html#reviews">Відгуки</a></li>
+                        <li><a href="index.html#contact">Контакти</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Контакти</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> 063 789 79 67</p>
+                        <p><i class="fas fa-phone"></i> 067 478 05 40</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/anastasia_.zabolotna?igsh=MXc1NTM5MWJlZHo0NQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/100095035722399/" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="viber://chat?number=+380637897967"><i class="fab fa-viber"></i></a>
+                        <a href="https://t.me/+380637897967" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://wa.me/380674780540" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Анастасія Заболотна. Усі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const container = document.getElementById('articleContainer');
+            
+            // Отримуємо ID статті з URL (наприклад: article-view.html?id=123)
+            const urlParams = new URLSearchParams(window.location.search);
+            let articleId = urlParams.get('id');
+
+            // Фолбек: якщо сервер (наприклад npx serve) обрізав query-параметри при редіректі, беремо з хешу
+            if (!articleId && window.location.hash) {
+                articleId = window.location.hash.substring(1); // видаляємо символ '#'
+            }
+
+            if (!articleId) {
+                container.innerHTML = '<h2 style="color: red; text-align: center;">Статтю не знайдено</h2><p style="text-align: center;">Поверніться на сторінку статей та спробуйте ще раз.</p>';
+                return;
+            }
+            
+            // Supabase конфігурація
+            const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            try {
+                const { data, error } = await supabase
+                    .from('articles')
+                    .select('*')
+                    .eq('id', articleId)
+                    .single(); // Отримуємо лише один запис
+                
+                if (error) throw error;
+
+                if (!data) {
+                    container.innerHTML = '<h2 style="color: red; text-align: center;">Статтю не знайдено або її було видалено</h2>';
+                    return;
+                }
+                
+                renderArticle(data);
+
+            } catch (e) {
+                console.error("Помилка завантаження статті:", e);
+                container.innerHTML = '<h2 style="color: red; text-align: center;">Сталася помилка при завантаженні статті.</h2>';
+            }
+
+            function renderArticle(data) {
+                // Форматуємо дату
+                const d = new Date(data.date);
+                const dateStr = isNaN(d) ? data.date : d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                // Змінюємо Title сторінки
+                document.title = data.title + " - Анастасія Заболотна";
+
+                // Виводимо статтю
+                container.innerHTML = `
+                    <h1 style="color: var(--primary-color); margin-bottom: 10px;">${data.title}</h1>
+                    <span id="articleDate"><i class="far fa-calendar-alt"></i> ${dateStr}</span>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 30px;">
+                    <div id="articleBody">${data.text}</div>
+                `;
+            }
+        });
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

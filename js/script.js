@@ -52,11 +52,13 @@ nav.querySelectorAll('a').forEach(link => {
 
 // Contact form handling
 // Contact form handling with EmailJS
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data using correct selectors
-    const name = this.querySelector('input[name="from_name"]').value;
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data using correct selectors
+        const name = this.querySelector('input[name="from_name"]').value;
     const email = this.querySelector('input[name="from_email"]').value;
     const phone = this.querySelector('input[name="phone"]').value;
     const message = this.querySelector('textarea[name="message"]').value;
@@ -124,6 +126,7 @@ document.querySelector('.contact-form').addEventListener('submit', function(e) {
         submitBtn.disabled = false;
     });
 });
+}
 
 // Function to show custom messages
 function showMessage(text, type) {
@@ -151,13 +154,19 @@ function showMessage(text, type) {
 }
 
 // Appointment button functionality
-document.querySelectorAll('.btn-appointment, .btn-primary').forEach(button => {
-    button.addEventListener('click', function() {
+document.querySelectorAll('.btn-appointment').forEach(button => {
+    button.addEventListener('click', function(e) {
         const contactSection = document.querySelector('#contact');
-        contactSection.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+        if (contactSection) {
+            e.preventDefault();
+            contactSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        } else {
+            // Якщо секції немає на сторінці (наприклад, на сторінці статей), переходимо на головну до контактів
+            window.location.href = 'index.html#contact';
+        }
     });
 });
 

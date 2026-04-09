@@ -110,6 +110,11 @@ html {
     backdrop-filter: blur(10px);
 }
 
+.header .container {
+    max-width: 1600px;
+    padding: 0 40px;
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -701,10 +706,23 @@ html {
     font-size: 24px;
 }
 
+/* Створюємо структуру flex-контейнера для всього сайту, щоб футер завжди був внизу */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
 /* Footer */
 .footer {
     background: var(--light-gray);
     padding: 60px 0 20px;
+    flex-shrink: 0;
 }
 
 .footer-content {
@@ -1015,7 +1033,8 @@ html {
     transform: translateY(0);
 }
 
-/* Sticky appointment button */
+/* Sticky appointment button (Disabled to prevent header layout shift) */
+/*
 .header.scrolled .btn-appointment {
     position: fixed;
     top: 20px;
@@ -1023,6 +1042,7 @@ html {
     z-index: 1001;
     box-shadow: 0 4px 15px rgba(59, 140, 136, 0.3);
 }
+*/
 
 .review-image {
     width: 100%;
