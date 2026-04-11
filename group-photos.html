@@ -22,16 +22,16 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             background: #fff;
             transition: transform 0.3s;
-            height: 300px; /* Фіксована висота для карток */
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .photo-card:hover {
             transform: translateY(-5px);
         }
         .photo-card img {
             width: 100%;
-            height: 100%; /* Заповнює весь простір картки */
-            object-fit: cover; /* Запобігає деформації фотографій */
+            height: auto;
             display: block;
         }
     </style>
@@ -60,6 +60,8 @@
                         <li><a href="index.html#services">Послуги</a></li>
                         <li><a href="index.html#reviews">Відгуки</a></li>
                         <li><a href="index.html#contact">Контакти</a></li>
+                    
+                        <li class="mobile-only-btn"><button class="btn-appointment mobile-btn-appointment"  onclick="window.location.href='index.html#contact'">Записатися</button></li>
                     </ul>
                 </nav>
                 <button class="btn-appointment" id="appointmentBtn" onclick="window.location.href='index.html#contact'">Записатися</button>
