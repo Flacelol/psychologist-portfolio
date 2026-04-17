@@ -133,24 +133,21 @@ if (contactForm) {
 
             // 2. Відправляємо email на lionchela20@gmail.com через FormSubmit
             try {
-                await fetch('https://formsubmit.co/ajax/lionchela20@gmail.com', {
+                // Використовуємо інший метод активації без AJAX для першого разу
+                const formSubmitData = new FormData();
+                formSubmitData.append('_subject', `Нова заявка з сайту від ${name}`);
+                formSubmitData.append('Ім\'я', name);
+                formSubmitData.append('Email', email);
+                formSubmitData.append('Телефон', phone);
+                formSubmitData.append('Повідомлення', message);
+                formSubmitData.append('_captcha', 'false');
+
+                await fetch('https://formsubmit.co/lionchela20@gmail.com', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        _subject: `Нова заявка з сайту від ${name}`,
-                        "Ім'я": name,
-                        "Email": email,
-                        "Телефон": phone,
-                        "Повідомлення": message
-                    })
+                    body: formSubmitData
                 });
             } catch (formSubmitError) {
                 console.warn('FormSubmit email failed, but data saved to Supabase', formSubmitError);
-                // We don't throw error here so the user still sees success message
-                // since the data is safely stored in Supabase
             }
 
             // Show success message
