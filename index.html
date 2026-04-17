@@ -7,12 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("W77pOMiUb5n0T9ZNz");
-        })();
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/script.js" defer></script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -55,6 +51,8 @@
                         <li><a href="#services">Послуги</a></li>
                         <li><a href="#reviews">Відгуки</a></li>
                         <li><a href="#contact">Контакти</a></li>
+                    
+                        <li class="mobile-only-btn"><button class="btn-appointment mobile-btn-appointment" >Записатися</button></li>
                     </ul>
                 </nav>
                 <button class="btn-appointment" id="appointmentBtn">Записатися</button>

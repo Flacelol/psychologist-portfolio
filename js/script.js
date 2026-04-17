@@ -40,9 +40,9 @@ mobileMenuToggle.addEventListener('click', function() {
     }
 });
 
-// Close mobile menu when clicking on links
-nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+// Close mobile menu when clicking on links or buttons inside it
+nav.querySelectorAll('a, button').forEach(element => {
+    element.addEventListener('click', () => {
         nav.classList.remove('active');
         const icon = mobileMenuToggle.querySelector('i');
         icon.classList.remove('fa-times');
@@ -50,24 +50,41 @@ nav.querySelectorAll('a').forEach(link => {
     });
 });
 
-// Contact form handling
-// Contact form handling with EmailJS
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    if (nav.classList.contains('active') && !nav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+        nav.classList.remove('active');
+        const icon = mobileMenuToggle.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+});
+
+// Supabase конфігурація
+const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
+let supabase = null;
+if (window.supabase) {
+    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+}
+
+// Contact form handling with Supabase & FormSubmit
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Get form data using correct selectors
         const name = this.querySelector('input[name="from_name"]').value;
-    const email = this.querySelector('input[name="from_email"]').value;
-    const phone = this.querySelector('input[name="phone"]').value;
-    const message = this.querySelector('textarea[name="message"]').value;
-    
-    // Simple validation
-    if (!name || !email || !phone || !message) {
-        showMessage('Будь ласка, заповніть всі поля', 'error');
-        return;
-    }
+        const email = this.querySelector('input[name="from_email"]').value;
+        const phone = this.querySelector('input[name="phone"]').value;
+        const message = this.querySelector('textarea[name="message"]').value;       
+
+        // Simple validation
+        if (!name || !email || !phone || !message) {
+            showMessage('Будь ласка, заповніть всі поля', 'error');
+            return;
+        }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -89,16 +106,39 @@ if (contactForm) {
     submitBtn.textContent = 'Надсилання...';
     submitBtn.disabled = true;
     
-    // Send email using EmailJS
-    emailjs.send('service_2pk9cen', 'template_miusrb9', {
-        from_name: name,
-        from_email: email,
-        phone: phone,
-        message: message,
-        to_name: 'Анастасія Заболотна'
-    })
-    .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
+    try {
+        // 1. Зберігаємо в Supabase для надійності (як резервна копія)
+        if (supabase) {
+            const { error: supabaseError } = await supabase
+                .from('contact_requests')
+                .insert([
+                    { name: name, email: email, phone: phone, message: message }
+                ]);
+            if (supabaseError) {
+                console.error('Supabase error:', supabaseError);
+            }
+        }
+
+        // 2. Відправляємо email на lionchela20@gmail.com через FormSubmit (безкоштовно)
+        const response = await fetch('https://formsubmit.co/ajax/lionchela20@gmail.com', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                _subject: `Нова заявка з сайту від ${name}`,
+                "Ім'я": name,
+                "Email": email,
+                "Телефон": phone,
+                "Повідомлення": message
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Помилка відправки email');
+        }
+
         // Show success message
         showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
         
@@ -114,17 +154,16 @@ if (contactForm) {
         } else {
             console.warn('gtag is not defined. Conversion event not sent.');
         }
-    })
-    .catch(function(error) {
-        console.log('FAILED...', error);
+
+    } catch (error) {
+        console.error('FAILED...', error);
         // Show error message
         showMessage('Помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться через месенджери.', 'error');
-    })
-    .finally(function() {
+    } finally {
         // Reset button state
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-    });
+    }
 });
 }
 
