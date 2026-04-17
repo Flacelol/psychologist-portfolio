@@ -131,9 +131,9 @@ if (contactForm) {
                 throw new Error('Supabase SDK not loaded');
             }
 
-            // 2. Відправляємо email на andriimuzhchil@gmail.com через FormSubmit
+            // 2. Відправляємо email на lionchela20@gmail.com через FormSubmit
             try {
-                await fetch('https://formsubmit.co/ajax/andriimuzhchil@gmail.com', {
+                await fetch('https://formsubmit.co/ajax/lionchela20@gmail.com', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
