@@ -28,47 +28,57 @@ window.addEventListener('scroll', function() {
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const nav = document.getElementById('nav');
 
-mobileMenuToggle.addEventListener('click', function() {
-    nav.classList.toggle('active');
-    const icon = this.querySelector('i');
-    if (nav.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-    } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-    }
-});
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', function() {
+        nav.classList.toggle('active');
+        const icon = this.querySelector('i');
+        if (nav.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        } else {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+}
 
 // Close mobile menu when clicking on links or buttons inside it
-nav.querySelectorAll('a, button').forEach(element => {
-    element.addEventListener('click', () => {
-        nav.classList.remove('active');
-        const icon = mobileMenuToggle.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
+if (nav) {
+    nav.querySelectorAll('a, button').forEach(element => {
+        element.addEventListener('click', () => {
+            nav.classList.remove('active');
+            if (mobileMenuToggle) {
+                const icon = mobileMenuToggle.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        });
     });
-});
+}
 
 // Close mobile menu when clicking outside
 document.addEventListener('click', function(event) {
-    if (nav.classList.contains('active') && !nav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+    if (nav && mobileMenuToggle && nav.classList.contains('active') && !nav.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
         nav.classList.remove('active');
         const icon = mobileMenuToggle.querySelector('i');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
+        if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
     }
 });
 
 // Supabase конфігурація
 const supabaseUrl = 'https://zfxmdgofavotuwaapnaw.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmeG1kZ29mYXZvdHV3YWFwbmF3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NzIzODcsImV4cCI6MjA5MTI0ODM4N30.zUHzviNcfB5le8jvJBwsXKvOs_tNAO4Eq5QJ1FwDWYk';
-let supabase = null;
+let supabaseClient = null;
 if (window.supabase) {
-    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 }
 
-// Contact form handling with Supabase & FormSubmit
+// Contact form handling with Supabase
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
@@ -85,86 +95,68 @@ if (contactForm) {
             showMessage('Будь ласка, заповніть всі поля', 'error');
             return;
         }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        showMessage('Будь ласка, введіть коректний email', 'error');
-        return;
-    }
-    
-    // Phone validation (basic)
-    const phoneRegex = /^[\d\s\+\-\(\)]+$/;
-    if (!phoneRegex.test(phone)) {
-        showMessage('Будь ласка, введіть коректний номер телефону', 'error');
-        return;
-    }
-    
-    // Show loading state
-    const submitBtn = this.querySelector('.btn-submit');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Надсилання...';
-    submitBtn.disabled = true;
-    
-    try {
-        // 1. Зберігаємо в Supabase для надійності (як резервна копія)
-        if (supabase) {
-            const { error: supabaseError } = await supabase
-                .from('contact_requests')
-                .insert([
-                    { name: name, email: email, phone: phone, message: message }
-                ]);
-            if (supabaseError) {
-                console.error('Supabase error:', supabaseError);
-            }
-        }
-
-        // 2. Відправляємо email на lionchela20@gmail.com через FormSubmit (безкоштовно)
-        const response = await fetch('https://formsubmit.co/ajax/lionchela20@gmail.com', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                _subject: `Нова заявка з сайту від ${name}`,
-                "Ім'я": name,
-                "Email": email,
-                "Телефон": phone,
-                "Повідомлення": message
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Помилка відправки email');
-        }
-
-        // Show success message
-        showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
         
-        // Reset form
-        document.querySelector('.contact-form').reset();
-
-        // Відправка події конверсії в Google Ads
-        if (typeof gtag === 'function') {
-            gtag('event', 'conversion', {
-                'send_to': 'AW-18070432399/YQRxCOGL5ccEI_V06hD'
-            });
-            console.log('Google Ads conversion event sent.');
-        } else {
-            console.warn('gtag is not defined. Conversion event not sent.');
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showMessage('Будь ласка, введіть коректний email', 'error');
+            return;
         }
 
-    } catch (error) {
-        console.error('FAILED...', error);
-        // Show error message
-        showMessage('Помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться через месенджери.', 'error');
-    } finally {
-        // Reset button state
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-});
+        // Phone validation (basic)
+        const phoneRegex = /^[\d\s\+\-\(\)]+$/;
+        if (!phoneRegex.test(phone)) {
+            showMessage('Будь ласка, введіть коректний номер телефону', 'error');
+            return;
+        }
+
+        // Show loading state
+        const submitBtn = this.querySelector('.btn-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Надсилання...';
+        submitBtn.disabled = true;
+
+        try {
+            // 1. Зберігаємо в Supabase для надійності (основний метод)
+            if (supabaseClient) {
+                const { error: supabaseError } = await supabaseClient
+                    .from('contact_requests')
+                    .insert([
+                        { name: name, email: email, phone: phone, message: message }
+                    ]);
+                if (supabaseError) {
+                    throw new Error('Supabase error: ' + supabaseError.message);
+                }
+            } else {
+                throw new Error('Supabase SDK not loaded');
+            }
+
+            // Show success message
+            showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
+
+            // Reset form
+            this.reset();
+
+            // Відправка події конверсії в Google Ads       
+            if (typeof gtag === 'function') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-18070432399/YQRxCOGL5ccEI_V06hD'
+                });
+                console.log('Google Ads conversion event sent.');
+            } else {
+                console.warn('gtag is not defined. Conversion event not sent.');    
+            }
+
+        } catch (error) {
+            console.error('FAILED...', error);
+            // Show error message
+            showMessage('Помилка при надсиланні повідомлення. Спробуйте ще раз або зв\'яжіться через месенджери.', 'error');
+        } finally {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
 }
 
 // Function to show custom messages
