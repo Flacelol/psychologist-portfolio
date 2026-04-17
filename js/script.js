@@ -131,6 +131,26 @@ if (contactForm) {
                 throw new Error('Supabase SDK not loaded');
             }
 
+            // 2. Відправляємо email на lionchela20@gmail.com через FormSubmit
+            const response = await fetch('https://formsubmit.co/ajax/lionchela20@gmail.com', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: `Нова заявка з сайту від ${name}`,
+                    "Ім'я": name,
+                    "Email": email,
+                    "Телефон": phone,
+                    "Повідомлення": message
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Помилка відправки email через FormSubmit');
+            }
+
             // Show success message
             showMessage('Повідомлення надіслано! Дякую за ваше звернення. Я зв\'яжуся з вами найближчим часом.', 'success');
 
