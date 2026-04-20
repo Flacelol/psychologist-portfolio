@@ -157,11 +157,20 @@ if (contactForm) {
             this.reset();
 
             // Відправка події конверсії в Google Ads       
-            if (typeof gtag === 'function') {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-18070432399/YQRxCOGL5ccEI_V06hD'
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', 'conversion', {
+                    'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD',
+                    'value': 1.0
                 });
                 console.log('Google Ads conversion event sent.');
+            } else if (window.dataLayer) {
+                // Резервний варіант через dataLayer, якщо gtag напряму не спрацьовує
+                window.dataLayer.push({
+                    'event': 'conversion',
+                    'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD',
+                    'value': 1.0
+                });
+                console.log('Google Ads conversion event pushed to dataLayer.');
             } else {
                 console.warn('gtag is not defined. Conversion event not sent.');    
             }
