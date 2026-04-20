@@ -157,20 +157,24 @@ if (contactForm) {
             this.reset();
 
             // Відправка події конверсії в Google Ads       
-            if (typeof window.gtag === 'function') {
-                window.gtag('event', 'conversion', {
-                    'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
-                });
-                console.log('Google Ads conversion event sent.');
-            } else if (window.dataLayer) {
-                // Резервний варіант через dataLayer, якщо gtag напряму не спрацьовує
-                window.dataLayer.push({
-                    'event': 'conversion',
-                    'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
-                });
-                console.log('Google Ads conversion event pushed to dataLayer.');
-            } else {
-                console.warn('gtag is not defined. Conversion event not sent.');    
+            try {
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'conversion', {
+                        'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
+                    });
+                    console.log('Google Ads conversion event sent via gtag.');
+                }
+                
+                // Дублюємо в dataLayer гарантовано, оскільки на сайті стоїть Google Tag Manager
+                if (window.dataLayer) {
+                    window.dataLayer.push({
+                        'event': 'conversion',
+                        'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
+                    });
+                    console.log('Google Ads conversion event pushed to dataLayer.');
+                }
+            } catch (gtagError) {
+                console.error('Error sending Google Ads conversion:', gtagError);
             }
 
         } catch (error) {
