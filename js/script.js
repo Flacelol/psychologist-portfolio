@@ -160,7 +160,7 @@ if (contactForm) {
             try {
                 if (typeof window.gtag === 'function') {
                     window.gtag('event', 'conversion', {
-                        'send_to': 'AW-18070432399/YQbKCOGL5cceE1_VG0hD'
+                        'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
                     });
                     console.log('Google Ads conversion event sent via gtag.');
                 }
@@ -169,7 +169,7 @@ if (contactForm) {
                 if (window.dataLayer) {
                     window.dataLayer.push({
                         'event': 'conversion',
-                        'send_to': 'AW-18070432399/YQbKCOGL5cceE1_VG0hD'
+                        'send_to': 'AW-18070432399/YQRxCOGLs5ccEl_V06hD'
                     });
                     console.log('Google Ads conversion event pushed to dataLayer.');
                 }
